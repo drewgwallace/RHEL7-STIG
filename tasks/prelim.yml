@@ -1,6 +1,7 @@
 ---
 - name: "PRELIM | Find all sudoers files."
   command: "find /etc/sudoers /etc/sudoers.d/ -type f ! -name '*~' ! -name '*.*'"
+  check_mode: no
   changed_when: no
   failed_when: no
   register: rhel7stig_sudoers_files
@@ -96,7 +97,7 @@
       - RHEL-07-031010
 
 - name: "PRELIM | RHEL-07-021350 | Check if /boot or /boot/efi reside on separate partitions"
-  shell: df --output=target /boot/efi | tail -n 1
+  shell: df --output=target /boot | tail -n 1
   changed_when: no
   check_mode: no
   register: rhel_07_boot_part
@@ -152,7 +153,6 @@
       hidden: true
   failed_when: no
   changed_when: no
-  ignore_errors: yes
   register: rhel_07_040410_audit
   when: rhel_07_040410
   tags:
@@ -170,7 +170,6 @@
       hidden: true
   failed_when: no
   changed_when: no
-  ignore_errors: yes
   register: rhel_07_040420_audit
   when: rhel_07_040420
   tags:
